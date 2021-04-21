@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>微信视频号地址解析工具</title>
+</head>
+<body>
+  <div>
+    <h2>微信视频号地址解析工具</h2>
+  </div>
+  <div>
+    <textarea id="txt" rows="20" cols="90"></textarea>
+    <br>
+    链接：<a id="result" href="#" target="_blank">未解析</a>
+    <br>
+    <button onclick="prase()">解析</button>    
+  </div>
+</body>
+
+<script type="text/javascript">
+function prase() {
+  const regex = /<video.*?src="([^"]*)"[^>]*>(?:<\/video>)?/gm;
+  const str = document.getElementById('txt').value;
+  let url;
+  let m;
+
+  while ((m = regex.exec(str)) !== null) {
+    if (m.index === regex.lastIndex) {
+        regex.lastIndex++;
+    }
+    m.forEach((match, groupIndex) => {
+        url = match;
+    });
+  }
+  url = url.replace(/&amp;/g, '&');
+  console.log(url);
+  document.getElementById('result').innerText = url;
+  document.getElementById('result').setAttribute('href', url);
+}
+</script>
+</html>
